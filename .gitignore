@@ -1,0 +1,13 @@
+bin
+.classpath
+.project
+.settings
+/tokens
+/build
+/.gradle
+/gradle
+gradlew
+gradlew.bat
+settings.gradle
+/logs
+/res

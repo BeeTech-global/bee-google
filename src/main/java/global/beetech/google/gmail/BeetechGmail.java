@@ -1,4 +1,4 @@
-package global.beetech.gmail;
+package global.beetech.google.gmail;
 
 import java.io.IOException;
 import java.util.List;

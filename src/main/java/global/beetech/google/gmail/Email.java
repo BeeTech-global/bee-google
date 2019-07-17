@@ -1,4 +1,4 @@
-package global.beetech.gmail;
+package global.beetech.google.gmail;
 
 import static com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets.load;
 import static com.google.api.client.googleapis.javanet.GoogleNetHttpTransport.newTrustedTransport;
