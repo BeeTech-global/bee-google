@@ -36,7 +36,7 @@ public class GoogleSheet {
 
 	private static final String APPLICATION_NAME = "195936116391-je0vm5btcdnt0de83tet2mdss10lagpf.apps.googleusercontent.com";
 	private static String ID_SHEET;
-	private static String SHEET_IMPORT;
+	public static String SHEET_IMPORT;
 	private static String SHEET_RANGE;
 	
 	private static final File DATA_STORE_DIR = new File(getProperty("user.home"),
@@ -113,19 +113,20 @@ public class GoogleSheet {
 
 		return rows;
 	}
-
+	
 	public static void setValue(String index, String value) {
 
 		try {
 			List<String> bory = asList(value);
 			ValueRange valueRange = new ValueRange();
-			String range = "'" + SHEET_IMPORT + "'!" + index;
+			String range = "" + SHEET_IMPORT + "!" + index;
+			System.out.println(asList(bory));
 
 			valueRange.set("values", asList(bory));
 			Update request = sheet.spreadsheets()
 					.values()
 					.update(ID_SHEET, range, valueRange);
-			request.setValueInputOption("RAW");
+			request.setValueInputOption("USER_ENTERED");
 			request.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
