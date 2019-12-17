@@ -7,6 +7,7 @@ import static com.google.api.services.sheets.v4.SheetsScopes.DRIVE;
 import static com.google.api.services.sheets.v4.SheetsScopes.DRIVE_FILE;
 import static com.google.api.services.sheets.v4.SheetsScopes.SPREADSHEETS;
 import static com.google.api.services.sheets.v4.SheetsScopes.SPREADSHEETS_READONLY;
+import static java.lang.System.err;
 import static java.lang.System.getProperty;
 import static java.lang.Thread.sleep;
 import static java.util.Arrays.asList;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +38,6 @@ public class GoogleSheet {
 
 	private static final String APPLICATION_NAME = "195936116391-je0vm5btcdnt0de83tet2mdss10lagpf.apps.googleusercontent.com";
 	private static String ID_SHEET;
-	public static String SHEET_IMPORT;
 	private static String SHEET_RANGE;
 	
 	private static final File DATA_STORE_DIR = new File(getProperty("user.home"),
@@ -60,9 +61,8 @@ public class GoogleSheet {
 		}
 	}
 
-	public static void login(String sheetId, String tab, String range) throws IOException {
+	public static void login(String sheetId, String range) throws IOException {
 		ID_SHEET = sheetId;
-		SHEET_IMPORT = tab;
 		SHEET_RANGE = range;
 		authorize();
 	}
@@ -91,7 +91,7 @@ public class GoogleSheet {
 				.execute()
 				.getValues();
 	}
-
+	
 	public static Integer getLast(String tab) throws IOException {
 		return sheet.spreadsheets()
 				.values()
@@ -100,9 +100,16 @@ public class GoogleSheet {
 				.getValues()
 				.size() + 1;
 	}
+
 	
-	public static Map<Integer, List<String>> getSheet() throws IOException {
-		List<List<Object>> sheet = getValues(SHEET_IMPORT);
+	public static Map<Integer, List<String>> getSheet(String tab)  {
+		List<List<Object>> sheet = new ArrayList();
+		try {
+			sheet = getValues(tab);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		Map<Integer, List<String>> rows = new HashMap<>();
 
 		for (int i = 1; i < sheet.size(); i++) {
@@ -113,15 +120,14 @@ public class GoogleSheet {
 
 		return rows;
 	}
+
 	
-	public static void setValue(String index, String value) {
+	public static void setValue(String index, String value, String tab) {
 
 		try {
 			List<String> bory = asList(value);
 			ValueRange valueRange = new ValueRange();
-			String range = "" + SHEET_IMPORT + "!" + index;
-			System.out.println(asList(bory));
-
+			String range = "" + tab + "!" + index;
 			valueRange.set("values", asList(bory));
 			Update request = sheet.spreadsheets()
 					.values()
@@ -129,13 +135,13 @@ public class GoogleSheet {
 			request.setValueInputOption("USER_ENTERED");
 			request.execute();
 		} catch (Exception e) {
-			e.printStackTrace();
+			err.println(e.getMessage());
 			try {
 				sleep(5000);
 				authorize();
-				setValue(index, value);
+				setValue(index, value, tab);
 			} catch (IOException | InterruptedException e1) {
-				e1.printStackTrace();
+				err.println(e1.getMessage());
 			}
 		}
 	}
