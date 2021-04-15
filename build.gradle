@@ -1,25 +1,25 @@
-
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'java-library'
+}
 
 repositories {
     jcenter()
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile ('com.google.api-client:google-api-client:1.23.0') {
+    api 'org.slf4j:slf4j-api:1.7.21'
+    api ('com.google.api-client:google-api-client:1.23.0') {
    		 
     }
-    compile 'com.google.apis:google-api-services-sheets:v4-rev504-1.23.0'
+    api 'com.google.apis:google-api-services-sheets:v4-rev504-1.23.0'
     
-    compile group: 'com.google.apis', name: 'google-api-services-gmail', version: 'v1-rev82-1.23.0'
-	compile group: 'com.google.api-client', name: 'google-api-client-extensions', version: '1.6.0-beta'
-	compile group: 'com.google.api-client', name: 'google-api-client-gson', version: '1.23.0'
-	compile group: 'com.google.api-client', name: 'google-api-client-java6', version: '1.23.0'
-	compile group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.23.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
-    compile 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
-
-    testCompile 'junit:junit:4.12'
+    api group: 'com.google.apis', name: 'google-api-services-gmail', version: 'v1-rev82-1.23.0'
+	api group: 'com.google.api-client', name: 'google-api-client-extensions', version: '1.6.0-beta'
+	api group: 'com.google.api-client', name: 'google-api-client-gson', version: '1.23.0'
+	api group: 'com.google.api-client', name: 'google-api-client-java6', version: '1.23.0'
+	api group: 'com.google.oauth-client', name: 'google-oauth-client-jetty', version: '1.23.0'
+    api 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    api 'com.google.apis:google-api-services-drive:v3-rev110-1.23.0'
 }
 
