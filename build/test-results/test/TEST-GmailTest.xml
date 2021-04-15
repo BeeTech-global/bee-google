@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="GmailTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-03-27T18:07:47" hostname="fabricio-XPS-8700" time="0.001">
-  <properties/>
-  <testcase name="testSomeLibraryMethod" classname="GmailTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
